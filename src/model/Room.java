@@ -1,6 +1,6 @@
 package model;
 
-public class Room implements IRoom {
+public class Room implements HotelRoom {
     String roomNumber;
 
     Double price;
@@ -12,9 +12,22 @@ public class Room implements IRoom {
         this.roomType = roomType;
     }
 
-    public Room(String roomNumber, Double price, RoomType roomType) {
+    public Room(String roomNumber, RoomType roomType, Double price) {
         this.roomNumber = roomNumber;
         this.price = price;
+        this.roomType = roomType;
+    }
+
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+
+    public void setRoomPrice(Double price) {
+        this.price = price;
+    }
+
+    public void setRoomType(RoomType roomType) {
         this.roomType = roomType;
     }
 
