@@ -11,6 +11,12 @@ public class ReservationService {
     private Map<String, HotelRoom> allRooms = new HashMap<>();
     private List<Reservation> allReservations = new ArrayList<>();
     private ReservationService(){}
+
+    public Map<String, HotelRoom> getAllRooms() {
+        return allRooms;
+    }
+
+
     public static ReservationService getInstance() {
         if (instance == null) {
             instance = new ReservationService();
@@ -31,22 +37,40 @@ public class ReservationService {
         return newlyReservedRoom;
     }
 
-    public Collection<HotelRoom> findRooms(Date checkInDate, Date checkOutDate){
+    public Collection<HotelRoom> findRooms(Date requestedCheckInDate, Date requestedCheckOutDate){
         List<HotelRoom> availableRooms = new LinkedList<>();
         for (HotelRoom room:allRooms.values()) {
-            //for loop reservations to compare to room and reservation
-                //if statement --> if requested checkOut comes before reserved checkIn 
-                // OR requested checkIn comes after reserved checkOut THEN --> This is an available room
             for (Reservation rsrv: allReservations) {
-                if (room == rsrv.getRoom() && (checkOutDate.before(rsrv.getCheckInDate()) || checkInDate.after(rsrv.getCheckOutDate()))){
-                    availableRooms.add(room);
+                if (
+                    room == rsrv.getRoom()
+                    && (requestedCheckOutDate.before(rsrv.getCheckInDate())
+                    || requestedCheckInDate.after(rsrv.getCheckOutDate()))
+                ){
+                        availableRooms.add(room);
                 }
             }
         }
         return availableRooms;
     }
 
-    public Collection
+    public Collection<Reservation> getCustomerReservations(Customer customer){
+        List<Reservation> allReservationsMadeByCustomer = new LinkedList<>();
+        for (Reservation rsrv:
+             allReservations) {
+            if (Objects.equals(customer, rsrv.getCustomer())){
+                allReservationsMadeByCustomer.add(rsrv);
+            }
+        }
+        return allReservationsMadeByCustomer;
+    }
 
+
+
+    public void printAllReservations(){
+        for (Reservation rsrv:
+                allReservations) {
+            System.out.println(rsrv);
+        }
+    }
 
 }

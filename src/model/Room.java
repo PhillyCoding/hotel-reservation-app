@@ -56,4 +56,29 @@ public class Room implements HotelRoom {
         return "Room " + getRoomNumber() + " is a " + getRoomType()  + " priced at " + getRoomPrice();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        // If the object is compared with itself then return true
+        if (this == obj) {
+            return true;
+        }
+
+        // Check if the object is an instance of Room
+        if (!(obj instanceof Room)) {
+            return false;
+        }
+
+        // Typecast obj to Room to compare the data members
+        Room room = (Room) obj;
+
+        // Compare the roomNumber of the two rooms
+        return roomNumber.equals(room.roomNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return roomNumber.hashCode();
+    }
+
+
 }
